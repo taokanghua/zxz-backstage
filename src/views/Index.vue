@@ -8,24 +8,23 @@
     background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b"
-    @click.native="addTab"
   >
     <el-submenu index="1">
       <template slot="title">
         <i class="el-icon-location"></i>
         <span>会员管理</span>
       </template>
-      <el-menu-item index="MemOrder" path="MemOrder" @click="test">
+      <el-menu-item index="MemOrder" @click="addTab('会员列表', 'MemOrder')">
         <i class="el-icon-location"></i>
-        <span path="MemOrder">会员列表</span>
+        <span>会员列表</span>
       </el-menu-item>
-      <el-menu-item index="order">
-        <i class="el-icon-location" path="order"></i>
-        <span path="order">订单列表</span>
+      <el-menu-item index="order" @click="addTab('订单列表', 'order')">
+        <i class="el-icon-location" ></i>
+        <span>订单列表</span>
       </el-menu-item>
-      <el-menu-item index="rechargeChart">
-        <i class="el-icon-location" path="rechargeChart"></i>
-        <span path="rechargeChart">充值统计</span>
+      <el-menu-item index="rechargeChart" @click="addTab('充值统计', 'rechargeChart')">
+        <i class="el-icon-location" ></i>
+        <span>充值统计</span>
       </el-menu-item>
     </el-submenu>
     
@@ -75,6 +74,7 @@ export default {
       }
     },
     methods:{
+      test(name){console.log(name)},
       // addTab(){ //测试函数
       //   let obj = {
       //     title:'Tab 4',
@@ -99,42 +99,32 @@ export default {
         // this.editableTabs.splice(index, 1)
         this.$store.commit('changeEditTab', index)
       },
-      async addTab(e){ //获取点击的标题文字
+      addTab(title, path){ //获取点击的标题文字
       //这里有时候会报获取dom元素失败的错误提示 后面再修改   // 待后修复
       // 用来 async 和 nexttick 感觉稍微好了点  但是有时候还是会获取失败
       //如果没有此节点信息 return  如果已经有了该标签 return
-        await this.$nextTick()
-        console.log(e)
-        try { 
-          if(e.target.attributes.path.nodeValue=="undefined") return false
-          let ifHas = this.editableTabs.find(item=>item.title==e.target.innerText)
-          this.$router.push({name:e.target.attributes.path.nodeValue})
+        
+        
+          let ifHas = this.editableTabs.find(item=>item.title==title)
+          this.$router.push({name:path})
           if(ifHas){
             this.activeIndex = ifHas.name //点击左侧菜单设置活动标签  并设置跳转
             
             return
           }
-        let nodeName = e.target.nodeName.toLowerCase()
-        if(!e) return
-        if(nodeName == "li" || nodeName == "span"){
-          // console.log(nodeName, e.target.innerText)
-          // console.log(e.target.attributes.path.nodeValue, e.target.innerText)
-          // let node = e.target.attributes.path.nodeValue
+        
           
           
           let obj = {
-            title:e.target.innerText,
-            path:e.target.attributes.path.nodeValue,
+            title,
+            path,
             operation: 'a',
             name: this.$store.state.editableTabs.length+''
           }
           // console.log(obj)
           this.$store.commit('changeEditTab',obj)
-        }
-        } catch (error) {
-            // this.$router.push({name:e.target.attributes.path.nodeValue})
-          console.log('dom获取失败')
-        }
+        
+        
       }
     },
     components:{
