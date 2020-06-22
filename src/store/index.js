@@ -5,9 +5,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         editableTabs: JSON.parse(window.sessionStorage.getItem('tabs')) || [{
-            title: '会员列表',
+            title: '首页',
             name: '0',
-            path: 'MemOrder'
+            path: 'welcome'
           }
           ]
     },

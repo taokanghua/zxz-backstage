@@ -20,23 +20,33 @@ const routes = [
     children:[
         {
             path:'/index',
-            redirect:'MemOrder'
+            redirect:'welcome'
+        },
+        {
+            path:'welcome',
+            name:'welcome',
+            component:() => import('@/views/Welcome.vue')
         },
         {
             path:'MemOrder',
             name:'MemOrder',
-            component:() => import('@/views/index/MemOrder.vue')
+            component:() => import('@/views/member/MemOrder.vue')
         },
         {
             path:'order',
             name:'order',
-            component:() => import('@/views/index/order.vue')
+            component:() => import('@/views/order/order.vue')
         },
         {
             path:'rechargeChart',
             name:'rechargeChart',
-            component:() => import('@/views/index/rechargeChart.vue')
+            component:() => import('@/views/order/rechargeChart.vue')
         },
+        { // 测试路由 无用
+            path:'test',
+            name:'test',
+            component: () => import('@/views/test.vue')
+        }
     ]
 }]
 

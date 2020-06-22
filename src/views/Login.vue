@@ -26,7 +26,7 @@ export default {
   },
   methods:{
     loginIn(){
-      this.$router.push({path:'/index/MemOrder'})
+      this.$router.push({path:'/index'})
     }
   }
 }
